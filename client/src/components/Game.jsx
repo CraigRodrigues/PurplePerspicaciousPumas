@@ -6,7 +6,7 @@ import EndOfGame from './EndOfGame.jsx';
 import $ from 'jquery';
 import axios from 'axios';
 import io from 'socket.io-client';
-import { Col, PageHeader, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Button, Col, PageHeader, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 class Game extends React.Component {
   constructor(props) {
@@ -150,17 +150,17 @@ class Game extends React.Component {
   render() {
     return (
       <div id="game">
-        <Col sm={6} smOffset={3}>
+        <Col md={9}>
           {this.state.game && this.state.username && this.state.game.gameStage === 'waiting' && <WaitingRoom game={this.state.game} time={this.state.time} user={this.state.username} sendToLobby={this.props.route.sendToLobby} leaveGame={this.leaveGame} />}
           {this.state.game && this.state.username && this.state.game.gameStage === 'playing' && <PlayingGame game={this.state.game} time={this.state.time} user={this.state.username} handleResponse={this.handleResponse} handlePromptSubmission={this.handlePromptSubmission} handleJudgeSelection={this.handleJudgeSelection} handleReadyToMoveOn={this.handleReadyToMoveOn}/>}
           {this.state.game && this.state.username && this.state.game.gameStage === 'gameover' && <EndOfGame game={this.state.game} sendToLobby={this.props.route.sendToLobby}/>}
         </Col>
-        <Col sm={6} smOffset={3}>
-          <input placeholder="Type here..." value={this.state.value} onChange={this.handleMessageChange}/>
-          <button onClick={() => this.sendMessageToChatroom(this.state.value)}>Send</button>
+        <Col md={3}>
           <Panel header="Game Chat" bsStyle="primary">
             {this.state.gameChat.map(message => <p>{message.username}: {message.message}</p>)}
           </Panel>
+          <input placeholder="Chat here..." value={this.state.value} onChange={this.handleMessageChange}/>
+          <Button bsStyle="primary" onClick={() => this.sendMessageToChatroom(this.state.value)}>Send</Button>
         </Col>
       </div>
     )
